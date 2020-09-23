@@ -1,0 +1,27 @@
+POST /create		=> Creates a new song post. DONE
+GET /all			=> Retrieves all song posts DONE
+GET/search/title(?) or artist(?) or lyric(?) (or all three?)    =>Searches users posts
+PUT /update/:id		=> Updates a song post
+DELETE /delete/:id	=> Deletes a post
+
+
+  song: {
+            type: DataTypes.STRING, 
+            allowNull: false
+        },
+        artist: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        album: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        url: {
+            type: DataTypes.STRING(2000),
+            allowNull: true
+        }, 
+        owner: {
+            type: DataTypes.INTEGER
+        }
+    })
