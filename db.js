@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize("redbadge-music-logs", "postgres", "password", {
     host: "localhost",
-    dialect: 'postgres',
+    dialect: "postgres",
 })
 sequelize.authenticate().then(
     function() {
