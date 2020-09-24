@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const Events = require("../db").import("../models/events");
-// const validateSession = require("../middleware/vaildate-session");
+const validateSession = require("../middleware/validate-session");
 const sequelize = require("../db");
 
-router.post("/create", (req, res) => {
+router.post("/create", validateSession, (req, res) => {
     const dateConversion = new Date(req.body.date);
     const eventsLog = {
         date: dateConversion,
-        artist: req.body.artist,
+        artist: req.body.artist, 
         location: req.body.location,
         time: req.body.time,
         link: req.body.link,
@@ -18,7 +18,7 @@ router.post("/create", (req, res) => {
         .catch(err => res.status(500).json({error: err}));
 });
 
-router.get("/all", (req, res) => {
+router.get("/all", validateSession, (req, res) => {
     let userid = req.user.id
     Events.findAll({
         where: {owner: userid},
@@ -28,18 +28,18 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 })
 
-router.post("/search-dates", (req, res) => {
+router.post("/search-dates", validateSession, (req, res) => {
     let startDate = req.body.startDate
     let endDate = req.body.endDate
     const query = {
-        text: `SELECT * from entries WHERE owner = '${req.user.id}' AND date BETWEEN '${req.body.startDate}' and '${req.body.endDate}' ORDER BY date ASC`
+        text: `SELECT * from events WHERE owner = '${req.user.id}' AND date BETWEEN '${req.body.startDate}' and '${req.body.endDate}' ORDER BY date ASC`
     }
     sequelize.query(query.text).then(entries => res.status(200).json(entries[0])).catch(err => res.status(500).json({error: err}))
 })
 
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", validateSession, (req, res) => {
     const dateConversion = new Date(req.body.date);
-    const updateEntryLog = {
+    const updateEventsLog = {
         date: dateConversion,
         artist: req.body.artist,
         location: req.body.location,
@@ -52,18 +52,18 @@ router.put("/update/:id", (req, res) => {
             id: req.params.id, owner: req.user.id
         }
     };
-    Entry.update(updateEntryLog, query)
+    Events.update(updateEventsLog, query)
         .then((entries) => res.status(200).json(entries))
         .catch((err) => res.status(500).json({error:err}));
 });
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", validateSession, (req, res) => {
     const query = {
         where: {
             id: req.params.id, owner: req.user.id
         }
     };
-    Entry.destroy(query)
+    Events.destroy(query)
         .then(() => res.status(200).json({message: "Event Deleted!"}))
         .catch((err) => res.status(500).json({error: err}));
 });
