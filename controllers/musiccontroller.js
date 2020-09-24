@@ -1,27 +1,27 @@
 let express = require('express');
 let router = express.Router();
-// let validateSession = require('../middleware/validate-session');
+let validateSession = require('../middleware/validate-session');
 const music = require('../models/music');
 const Music = require('../db').import('../models/music');
 
-router.get('/practice', function(req, res) {
-    res.send('Hey! This is a practice route!')
-})
+// router.get('/practice', validateSession, function(req, res) {
+//     res.send('Hey! This is a practice route!')
+// })
 
-router.post('/create', (req, res) => {
+router.post('/create', validateSession, (req, res) => {
 const songPost = {
     song: req.body.music.song,
     artist: req.body.music.artist,
     album: req.body.music.album,
     url: req.body.music.url,
-    // owner: req.user.id
+    owner: req.user.id
 }
 Music.create(songPost)
 .then(music => res.status(200).json(music))
 .catch(err => res.status(500).json({ error: err }))
 });
 
-router.get('/', (req, res) => {
+router.get('/', validateSession, (req, res) => {
     Music.findAll()
     .then(music => res.status(200).json(music))
     .catch(err => res.status(500).json({ error: err }))
@@ -44,17 +44,15 @@ router.put('/:id',  (req, res) => {
     album: req.body.music.album,
     url: req.body.music.url,
     };
-    const query = { where: { id: req.params.id} };
-    // owner: req.user.id
+    const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Music.update(updateSong, query)
     .then((music) => res.status(200).json(music))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.delete('/:id',  (req, res) => {
-    const query = { where: { id: req.params.id } };
-    // owner: req.user.id
+router.delete('/:id', (req, res) => {
+    const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Music.destroy(query) 
     .then(() => res.status(200).json({message: 'Song was destroyed'}))
