@@ -8,8 +8,9 @@ let admin = require("./controllers/admincontroller");
 let events = require("./controllers/eventscontroller");
 let music = require('./controllers/musiccontroller');
 
-sequelize.sync();
 app.use(require("./middleware/headers"));
+sequelize.sync();
+// app.use(require("./middleware/headers"));
 
 app.use(express.json());
 
