@@ -61,4 +61,19 @@ router.post("/login", function (req, res) {
       res.status(500).json({ error: err });
     });
 });
+
+router.get("/eventinfo", function(req, res) {
+  sequelize
+    .query(
+      `Select * from ${Events} inner join ${Users} on ${req.users.id} = ${req.user.id}`
+      // Select * from events inner join users on users.id = events.owner
+    )
+    .then(([results, metadata]) => {
+      res.json(results);
+      // Results will be an empty array and metadata will contain the number of affected rows.
+    })
+    .catch(err => res.send(err));
+  })
+
+
 module.exports = router;
