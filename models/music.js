@@ -12,10 +12,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        url: {
+        text: {
             type: DataTypes.STRING(2000),
             allowNull: true
         }, 
+        rating: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         owner: {
             type: DataTypes.INTEGER
         }

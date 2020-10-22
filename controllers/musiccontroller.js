@@ -13,7 +13,8 @@ const songPost = {
     song: req.body.music.song,
     artist: req.body.music.artist,
     album: req.body.music.album,
-    url: req.body.music.url,
+    text: req.body.music.text,
+    rating: req.body.music.rating,
     owner: req.user.id
 }
 Music.create(songPost)
@@ -42,7 +43,8 @@ router.put('/:id',  (req, res) => {
     song: req.body.music.song,
     artist: req.body.music.artist,
     album: req.body.music.album,
-    url: req.body.music.url,
+    text: req.body.music.text,
+    rating: req.body.music.rating
     };
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
