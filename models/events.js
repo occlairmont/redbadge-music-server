@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         link: {
             type: DataTypes.STRING,
         },
+        hasAttended: {
+            type: DataTypes.BOOLEAN,
+        },
         owner: {
             type: DataTypes.INTEGER,
         }

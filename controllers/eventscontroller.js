@@ -11,6 +11,7 @@ router.post("/create", validateSession, (req, res) => {
         location: req.body.location,
         time: req.body.time,
         link: req.body.link,
+        hasAttended: req.body.hasAttended,
         owner: req.user.id
     }; 
     Events.create(eventsLog)
@@ -45,6 +46,7 @@ router.put("/update/:id", validateSession, (req, res) => {
         location: req.body.location,
         time: req.body.time,
         link: req.body.link,
+        hasAttended: req.body.hasAttended,
         owner: req.user.id
     };
     const query = {
