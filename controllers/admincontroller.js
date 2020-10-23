@@ -4,6 +4,7 @@ let sequelize = require("../db");
 let Admin = sequelize.import("../models/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const validateSession = require("../middleware/validate-session");
 
 // Admin Signup
 
@@ -62,10 +63,10 @@ router.post("/login", function (req, res) {
     });
 });
 
-router.get("/eventinfo", function(req, res) {
+router.get("/eventinfo", validateSession, function(req, res) {
   sequelize
     .query(
-      `Select * from ${Events} inner join ${Users} on ${req.users.id} = ${req.user.id}`
+      `Select * from events inner join users on ${req.user.id} = events.owner`
       // Select * from events inner join users on users.id = events.owner
     )
     .then(([results, metadata]) => {
