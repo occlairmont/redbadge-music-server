@@ -19,6 +19,7 @@ router.post("/create", validateSession, (req, res) => {
         .catch(err => res.status(500).json({error: err}));
 });
 
+
 router.get("/all", validateSession, (req, res) => {
     let userid = req.user.id
     Events.findAll({
@@ -28,6 +29,7 @@ router.get("/all", validateSession, (req, res) => {
     .then(entries => res.status(200).json(entries))
     .catch(err => res.status(500).json({error: err}))
 })
+
 
 router.post("/search-dates", validateSession, (req, res) => {
     let startDate = req.body.startDate
@@ -69,5 +71,4 @@ router.delete("/delete/:id", validateSession, (req, res) => {
         .then(() => res.status(200).json({message: "Event Deleted!"}))
         .catch((err) => res.status(500).json({error: err}));
 });
-
 module.exports = router;
