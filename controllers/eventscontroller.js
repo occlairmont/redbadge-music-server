@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Events = require("../db").import("../models/events");
 const validateSession = require("../middleware/validate-session");
 const sequelize = require("../db");
+
 router.post("/create", validateSession, (req, res) => {
     const dateConversion = new Date(req.body.date);
     const eventsLog = {
@@ -17,6 +18,9 @@ router.post("/create", validateSession, (req, res) => {
         .then(events => res.status(200).json(events))
         .catch(err => res.status(500).json({error: err}));
 });
+
+
+
 router.get("/all", validateSession, (req, res) => {
     let userid = req.user.id
     Events.findAll({
@@ -26,6 +30,9 @@ router.get("/all", validateSession, (req, res) => {
     .then(entries => res.status(200).json(entries))
     .catch(err => res.status(500).json({error: err}))
 })
+
+
+
 router.post("/search-dates", validateSession, (req, res) => {
     let startDate = req.body.startDate
     let endDate = req.body.endDate
@@ -34,6 +41,7 @@ router.post("/search-dates", validateSession, (req, res) => {
     }
     sequelize.query(query.text).then(entries => res.status(200).json(entries[0])).catch(err => res.status(500).json({error: err}))
 })
+
 router.put("/update/:id", validateSession, (req, res) => {
     const dateConversion = new Date(req.body.date);
     const updateEventsLog = {
@@ -54,6 +62,7 @@ router.put("/update/:id", validateSession, (req, res) => {
         .then((entries) => res.status(200).json(entries))
         .catch((err) => res.status(500).json({error:err}));
 });
+
 router.delete("/delete/:id", validateSession, (req, res) => {
     const query = {
         where: {
