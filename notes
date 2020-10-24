@@ -1,6 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
-    const Music = sequelize.define('music', {
-        song: {
+POST /create		=> Creates a new song post. DONE
+GET /all			=> Retrieves all song posts DONE
+GET/search/title(?) or artist(?) or lyric(?) (or all three?)    =>Searches users posts
+PUT /update/:id		=> Updates a song post
+DELETE /delete/:id	=> Deletes a post
+
+
+  song: {
             type: DataTypes.STRING, 
             allowNull: false
         },
@@ -12,18 +17,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        text: {
+        url: {
             type: DataTypes.STRING(2000),
             allowNull: true
         }, 
-        rating: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
         owner: {
             type: DataTypes.INTEGER
         }
     })
-
-    return Music;
-}
