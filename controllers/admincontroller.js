@@ -4,6 +4,7 @@ let sequelize = require("../db");
 let Admin = sequelize.import("../models/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const validateSession = require("../middleware/validate-session");
 
 // Admin Signup
 
@@ -61,4 +62,19 @@ router.post("/login", function (req, res) {
       res.status(500).json({ error: err });
     });
 });
+
+router.get("/eventinfo", validateSession, function(req, res) {
+  sequelize
+    .query(
+      `Select * from events inner join users on ${req.user.id} = events.owner`
+      // Select * from events inner join users on users.id = events.owner
+    )
+    .then(([results, metadata]) => {
+      res.json(results);
+      // Results will be an empty array and metadata will contain the number of affected rows.
+    })
+    .catch(err => res.send(err));
+  })
+
+
 module.exports = router;

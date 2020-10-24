@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         time: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         link: {
             type: DataTypes.STRING,
+        },
+        hasAttended: {
+            type: DataTypes.BOOLEAN,
         },
         owner: {
             type: DataTypes.INTEGER,
