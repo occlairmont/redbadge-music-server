@@ -20,7 +20,6 @@ router.post("/create", validateSession, (req, res) => {
 });
 
 
-
 router.get("/all", validateSession, (req, res) => {
     let userid = req.user.id
     Events.findAll({
@@ -30,7 +29,6 @@ router.get("/all", validateSession, (req, res) => {
     .then(entries => res.status(200).json(entries))
     .catch(err => res.status(500).json({error: err}))
 })
-
 
 
 router.post("/search-dates", validateSession, (req, res) => {

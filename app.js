@@ -12,11 +12,12 @@ app.use(require("./middleware/headers"));
 sequelize.sync();
 // app.use(require("./middleware/headers"));
 
+sequelize.sync();
 app.use(express.json());
 
 app.use("/users", users); // signup and login endpoints
 app.use("/admin", admin); // admin endpoints
-app.use("/music", music);
+app.use("/music", music); //music endpoints
 app.use("/events", events); // events endpoints
 
 app.listen(3001, function () {
