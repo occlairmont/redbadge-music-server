@@ -7,7 +7,10 @@ let users = require("./controllers/userscontroller");
 let admin = require("./controllers/admincontroller");
 let events = require("./controllers/eventscontroller");
 let music = require('./controllers/musiccontroller');
+
 app.use(require("./middleware/headers"));
+sequelize.sync();
+// app.use(require("./middleware/headers"));
 
 sequelize.sync();
 app.use(express.json());
