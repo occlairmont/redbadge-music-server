@@ -20,7 +20,7 @@ app.use("/admin", admin); // admin endpoints
 app.use("/music", music); //music endpoints
 app.use("/events", events); // events endpoints
 
-app.listen(3001, function () {
-  console.log("App is listening on port 3001");
+app.listen(process.env.PORT, function () {
+  console.log(`App is listening on port ${process.env.PORT}`);
 });
 

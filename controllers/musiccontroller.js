@@ -28,7 +28,7 @@ router.get('/', validateSession, (req, res) => {
     .catch(err => res.status(500).json({ error: err }))
 });
 
-router.get('/:title', (req, res) => {
+router.get('/:title', validateSession, (req, res) => {
     let title = req.params.title;
 
     Music.findAll({
@@ -38,7 +38,7 @@ router.get('/:title', (req, res) => {
     .catch(err => res.status(500).json({ error: err }))
 });
 
-router.put('/:id',  (req, res) => {
+router.put('/:id', validateSession,  (req, res) => {
     const updateSong = {
     song: req.body.music.song,
     artist: req.body.music.artist,
@@ -53,7 +53,7 @@ router.put('/:id',  (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateSession, (req, res) => {
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Music.destroy(query) 
