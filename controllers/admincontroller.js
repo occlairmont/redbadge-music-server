@@ -66,8 +66,8 @@ router.post("/login", function (req, res) {
 router.get("/eventinfo", validateSession, function(req, res) {
   sequelize
     .query(
-      `Select * from events inner join users on ${req.user.id} = events.owner`
-      // Select * from events inner join users on users.id = events.owner
+      // `Select * from events inner join users on ${req.user.id} = events.owner`
+      'Select * from events inner join users on users.id = events.owner'
     )
     .then(([results, metadata]) => {
       res.json(results);
