@@ -23,20 +23,23 @@ Music.create(songPost)
 });
 
 router.get('/', validateSession, (req, res) => {
-    Music.findAll()
-    .then(music => res.status(200).json(music))
-    .catch(err => res.status(500).json({ error: err }))
-});
-
-router.get('/:title', validateSession, (req, res) => {
-    let title = req.params.title;
-
+    const userid = req.user.id;
     Music.findAll({
-        where: {title: title}
+        where: {owner: userid}
     })
     .then(music => res.status(200).json(music))
     .catch(err => res.status(500).json({ error: err }))
 });
+
+// router.get('/:title', validateSession, (req, res) => {
+//     let title = req.params.title;
+
+//     Music.findAll({
+//         where: {title: title}
+//     })
+//     .then(music => res.status(200).json(music))
+//     .catch(err => res.status(500).json({ error: err }))
+// });
 
 router.put('/:id', validateSession,  (req, res) => {
     const updateSong = {
